@@ -53,4 +53,24 @@ export class AppComponent {
   removeTodo(todo){
     this.allItems.splice(this.allItems.indexOf(todo), 1);
   }
+
+  editTodo(todo){
+    todo.editing = true;
+    this.editingTodoTitle = todo.title;
+  }
+
+  editingTodoTitle = '';
+
+  updateEditingTodo(todo){
+    if (this.editingTodoTitle.length === 0) {
+      return this.removeTodo(todo);
+    }
+    todo.title = this.editingTodoTitle;
+    todo.editing = false;
+    this.editingTodoTitle = '';
+  }
+
+  stopEditing(todo){
+    todo.editing = false;
+  }
 }
