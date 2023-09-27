@@ -100,4 +100,8 @@ export class AppComponent {
   updateEditingTodoTitle(title) {
     this.editingTodoTitle = title;
   }
+
+  changeFilter(value){
+    this.filter = value;
+  }
 }
