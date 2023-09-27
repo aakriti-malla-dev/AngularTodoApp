@@ -10,6 +10,19 @@ export class AppComponent {
 
   allItems: any[] = [];
 
+  constructor() {
+    const savedTodos = JSON.parse(localStorage.getItem('todoList') || '[]');
+
+    this.allItems = savedTodos.map((todo) => {
+        return {
+            id: todo.id,
+            title: todo.title,
+            completed: todo.completed,
+            editing: todo.editing
+        };
+    });
+  }
+
   @Input()
   newTodoText = '';
 
@@ -29,10 +42,12 @@ export class AppComponent {
 
   toggleCompletion(todo) {
     todo.completed = !todo.completed;
+    this.updateStorage();
   }
 
   toggleAll() {
     this.allItems.forEach(todo => todo.completed = !todo.completed);
+    this.updateStorage();
   }
 
   get completed() {
@@ -41,6 +56,7 @@ export class AppComponent {
 
   removeCompleted() {
     this.allItems = this.allItems.filter(todo => !todo.completed);
+    this.updateStorage();
   }
 
   addTodo() {
@@ -48,10 +64,12 @@ export class AppComponent {
         this.allItems.push({ id: Date.now(), title: this.newTodoText, completed: false, editing: false });
         this.newTodoText = '';
     }
+    this.updateStorage();
   }
 
   removeTodo(todo){
     this.allItems.splice(this.allItems.indexOf(todo), 1);
+    this.updateStorage();
   }
 
   editTodo(todo){
@@ -68,9 +86,14 @@ export class AppComponent {
     todo.title = this.editingTodoTitle;
     todo.editing = false;
     this.editingTodoTitle = '';
+    this.updateStorage();
   }
 
   stopEditing(todo){
     todo.editing = false;
+  }
+
+  updateStorage(){
+    localStorage.setItem('todoList', JSON.stringify(this.allItems));
   }
 }
