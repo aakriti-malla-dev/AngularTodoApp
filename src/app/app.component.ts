@@ -96,4 +96,8 @@ export class AppComponent {
   updateStorage(){
     localStorage.setItem('todoList', JSON.stringify(this.allItems));
   }
+
+  updateEditingTodoTitle(title) {
+    this.editingTodoTitle = title;
+  }
 }

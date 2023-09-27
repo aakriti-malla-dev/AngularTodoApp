@@ -1,0 +1,12 @@
+<li class="todo-item" [class.completed]="item.completed" [class.editing]="item.editing">
+    <!-- NOTE - change to view-todo -->
+    <div class="view"> 
+        <!-- NOTE - change to toggle-done -->
+        <input class="toggle" type="checkbox" (click)="toggleCompletion(item)" [checked]="item.completed">
+        <label (dblclick)="editTodo(item)">{{item.title}}</label>
+        <!-- NOTE: Change to remove-todo -->
+        <button class="destroy" (click)="removeTodo(item)"></button>
+    </div>
+    <!-- NOTE: Change to edit-todo -->
+    <input class="edit" *ngIf="item.editing" type="text" [(ngModel)]="editingTodoTitle" (ngModelChange)="editingTodoTitleChange()" (keyup.enter)="updateEditingTodo(item)" (blur)="stopEditing(item)" (keyup.escape)="stopEditing(item)">
+</li>
